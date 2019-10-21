@@ -1,5 +1,5 @@
 #include "main.h"
-//ez money
+//ez moni
 /**
  * A callback function for LLEMU's center button.
  *
