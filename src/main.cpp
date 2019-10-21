@@ -1,5 +1,5 @@
 #include "main.h"
-//ez moni
+//jajaj salu2
 /**
  * A callback function for LLEMU's center button.
  *
