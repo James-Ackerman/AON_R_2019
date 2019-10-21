@@ -1,6 +1,6 @@
 #pragma once
 #include "main.h"
-
+//
 const int VISION_PORT = 19;
 
 const int DRIVE_MOTOR_LEFT_1 = 1;  //CHANGE
@@ -21,6 +21,20 @@ inline MotorGroup baseLB({DRIVE_MOTOR_LEFT_3, DRIVE_MOTOR_LEFT_4});
 inline MotorGroup baseRF({DRIVE_MOTOR_RIGHT_1, DRIVE_MOTOR_RIGHT_2});
 inline MotorGroup baseRB({DRIVE_MOTOR_RIGHT_3, DRIVE_MOTOR_RIGHT_4});
 
+inline Controller masterController;
+
+inline ControllerButton RightBumperUP(ControllerDigital::R1);
+inline ControllerButton LeftBumperUP(ControllerDigital::L1);
+inline ControllerButton LeftBumperDOWN(ControllerDigital::L2);
+inline ControllerButton RightBumperDOWN(ControllerDigital::R2);
+inline ControllerButton ButtonA(ControllerDigital::A);
+inline ControllerButton ButtonB(ControllerDigital::B);
+inline ControllerButton ButtonX(ControllerDigital::X);
+inline ControllerButton ButtonY(ControllerDigital::Y);
+inline ControllerButton ButtonUP(ControllerDigital::up);
+inline ControllerButton ButtonDOWN(ControllerDigital::down);
+inline ControllerButton ButtonLEFT(ControllerDigital::left);
+inline ControllerButton ButtonRIGHT(ControllerDigital::right);
 
 void pidTurn(float set);
 void fwbwVoltage(int voltage);
