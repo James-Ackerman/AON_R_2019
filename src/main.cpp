@@ -1,5 +1,5 @@
 #include "main.h"
-//this is a test
+
 /**
  * A callback function for LLEMU's center button.
  *
@@ -67,7 +67,6 @@ void autonomous() {}
  * control mode.
  *
  * If no competition control is connected, this function will run immediately
- * following initialize().
  *
  * If the robot is disabled or communications is lost, the
  * operator control task will be stopped. Re-enabling the robot will restart the
