@@ -23,8 +23,10 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+	pros::delay(100);
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "INITIALIZE");
+	pros::delay(100);
 }
 
 /**
@@ -73,15 +75,16 @@ void autonomous() {
  */
 void opcontrol() {
 pros::lcd::set_text(3, "OPCONTROL");
-	while (true) {
-		pros::lcd::print(4, "buttonpressed: %d\n", ButtonB.isPressed());
-  if (ButtonB.isPressed())
+	while (true)
+	{
+		pros::lcd::print(4, "buttonpressed: %d\n", ButtonA.isPressed());
+  if (ButtonB.changedToPressed())
   {
     pidTurn(255);
   }
-  if (ButtonA.isPressed())
+  if (ButtonX.isPressed())
   {
-    baseLF.moveVoltage(1000);
+    baseLF.moveVoltage(5000);
   }
   else
   {
