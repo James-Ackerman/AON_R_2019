@@ -2,21 +2,28 @@
 
 void pidTurn(float set)
 {
- armPID.set_set_point(set);
- arm_motor.tarePosition();
-//while ((armPID.get_Dterm() > 0.0001) && (armPID.get_error() >= 0.001))
+  float armPos;
+  arm_motor.tarePosition();
+  armPID.set_error(10000);
+  armPID.set_set_point(set);
 
-while (abs(armPID.get_error()) >= 0)
-{
- arm_motor.move_voltage(armPID.output(arm_motor.getPosition()));
-}
-arm_motor.move_voltage(0);
+
+  //while ((armPID.get_Dterm() > 0.0001) && (armPID.get_error() >= 0.001))
+
+  while (abs(armPID.get_error()) >= 50)
+  {
+   pros::lcd::print(5, "WE'RE IN %f\n", armPID.get_set_point());
+   armPos = (float) arm_motor.getPosition();
+   arm_motor.move_voltage(armPID.output(armPos));
+  }
+   pros::lcd::print(5, "WE'RE OUT %f\n", armPID.get_set_point());
+  arm_motor.move_voltage(0);
 }
 
 int calcVoltage(float volts){
-  if(volts>1.0){
+  if(volts>=1.0){
     volts = 12000;
-  } else if(volts<-1.0){
+  } else if(volts<=-1.0){
     volts = -12000;
   } else{
     volts *= 12000;
