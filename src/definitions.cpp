@@ -3,7 +3,9 @@
 void pidTurn(float set)
 {
  armPID.set_set_point(set);
+ arm_motor.tarePosition();
 //while ((armPID.get_Dterm() > 0.0001) && (armPID.get_error() >= 0.001))
+
 while (abs(armPID.get_error()) >= 0)
 {
  arm_motor.move_voltage(armPID.output(arm_motor.getPosition()));

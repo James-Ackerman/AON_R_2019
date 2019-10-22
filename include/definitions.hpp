@@ -42,6 +42,7 @@ void turnVoltage(int voltage);
 void strafeVoltage(int voltage);
 void stopDrive();
 int calcVoltage(float volts);
+
  const auto WHEEL_DIAMETER = 4_in;     //edit
  const auto CHASSIS_WIDTH = 12.75_in;  //edit
  inline auto driveController = ChassisControllerFactory::create(
@@ -126,10 +127,15 @@ void set_set_point(float set_point_)
 
   float get_error()
   {return error;}
+
+  float get_dt()
+  {return dt;}
+
   float get_Dterm()
   {return Dterm;}
 };
-inline PID armPID(0.2, 0.02, 0.002, 100);  //object creation
+
+inline PID armPID(5, 2, 2, 1000);  //object creation
 
 
 

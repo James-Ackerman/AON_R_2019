@@ -77,7 +77,8 @@ void opcontrol() {
 pros::lcd::set_text(3, "OPCONTROL");
 	while (true)
 	{
-		pros::lcd::print(4, "buttonpressed: %d\n", ButtonA.isPressed());
+		pros::lcd::print(4, "delta time: %f\n", armPID.get_dt());
+		pros::lcd::print(5, "setpoint: %f\n", armPID.get_set_point());
   if (ButtonB.changedToPressed())
   {
     pidTurn(255);
