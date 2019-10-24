@@ -14,6 +14,10 @@ void pidTurn(float set)
   {
    pros::lcd::print(5, "WE'RE IN %f\n", armPID.get_set_point());
    armPos = (float) arm_motor.getPosition();
+
+   if (armPID.output(armPos) >= 12000)
+   {arm_motor.moveVoltage(12000);}
+   else
    arm_motor.move_voltage(armPID.output(armPos));
   }
    pros::lcd::print(5, "WE'RE OUT %f\n", armPID.get_set_point());

@@ -138,7 +138,7 @@ void set_set_point(float set_point_)
   {return Dterm;}
 };
 
-inline PID armPID(30, 10, 10, 0);  //object creation
+inline PID armPID(8, 0, 0, 0);  //object creation
 
 
 
