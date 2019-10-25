@@ -1,12 +1,11 @@
 #include "definitions.hpp"
 
-void pidTurn(float set)
+void pidTurn(float set, int maxVoltage)
 {
   float armPos;
   arm_motor.tarePosition();
   armPID.set_error(10000);
   armPID.set_set_point(set);
-
 
   //while ((armPID.get_Dterm() > 0.0001) && (armPID.get_error() >= 0.001))
 
@@ -15,8 +14,8 @@ void pidTurn(float set)
    pros::lcd::print(5, "WE'RE IN %f\n", armPID.get_set_point());
    armPos = (float) arm_motor.getPosition();
 
-   if (armPID.output(armPos) >= 12000)
-   {arm_motor.moveVoltage(12000);}
+   if (armPID.output(armPos) >= maxVoltage)
+   {arm_motor.moveVoltage(maxVoltage);}
    else
    arm_motor.move_voltage(armPID.output(armPos));
   }
