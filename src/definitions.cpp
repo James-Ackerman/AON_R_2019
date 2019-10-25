@@ -16,6 +16,7 @@ void pidTurn(float set, int maxVoltage)
 
    if (armPID.output(armPos) >= maxVoltage)
    {arm_motor.moveVoltage(maxVoltage);}
+   
    else
    arm_motor.move_voltage(armPID.output(armPos));
   }
