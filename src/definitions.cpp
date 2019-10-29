@@ -20,7 +20,7 @@ void pidTurn(float set, int maxVoltage)
    else
    arm_motor.move_voltage(armPID.output(armPos));
   }
-   pros::lcd::print(5, "WE'RE OUT %f\n", armPID.get_set_point());
+   pros::lcd::print(6, "WE'RE OUT %f\n", armPID.get_set_point());
   arm_motor.move_voltage(0);
 }
 
