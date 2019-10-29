@@ -9,7 +9,7 @@ void pidTurn(float set, int maxVoltage)
 
   //while ((armPID.get_Dterm() > 0.0001) && (armPID.get_error() >= 0.001))
 
-  while (abs(armPID.get_error()) >= 5)
+  while (armPID.get_Dterm()>0.5/*armPID.get_error()) >= 5*/)
   {
    pros::lcd::print(5, "WE'RE IN %f\n", armPID.get_set_point());
    armPos = (float) arm_motor.getPosition();
