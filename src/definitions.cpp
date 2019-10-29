@@ -1,5 +1,4 @@
 #include "definitions.hpp"
-
 void pidTurn(float set, int maxVoltage)
 {
   float armPos;
@@ -9,14 +8,14 @@ void pidTurn(float set, int maxVoltage)
 
   //while ((armPID.get_Dterm() > 0.0001) && (armPID.get_error() >= 0.001))
 
-  while (abs(armPID.get_error()) >= 50)
+  while (abs(armPID.get_error()) >= 5)
   {
    pros::lcd::print(5, "WE'RE IN %f\n", armPID.get_set_point());
    armPos = (float) arm_motor.getPosition();
 
    if (armPID.output(armPos) >= maxVoltage)
    {arm_motor.moveVoltage(maxVoltage);}
-   
+
    else
    arm_motor.move_voltage(armPID.output(armPos));
   }

@@ -36,7 +36,7 @@ inline ControllerButton ButtonDOWN(ControllerDigital::down);
 inline ControllerButton ButtonLEFT(ControllerDigital::left);
 inline ControllerButton ButtonRIGHT(ControllerDigital::right);
 
-void pidTurn(float set);
+void pidTurn(float set, int maxVoltage);
 void fwbwVoltage(int voltage);
 void turnVoltage(int voltage);
 void strafeVoltage(int voltage);
@@ -138,7 +138,7 @@ void set_set_point(float set_point_)
   {return Dterm;}
 };
 
-inline PID armPID(8, 0, 0, 0);  //object creation
+inline PID armPID(12, 0, 0, 0);  //object creation
 
 
 
