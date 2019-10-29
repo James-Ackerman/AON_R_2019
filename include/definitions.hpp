@@ -128,6 +128,7 @@ void set_set_point(float set_point_)
   void set_error(float error_)
     {error = error_;}
 
+
   float get_error()
   {return error;}
 
@@ -136,9 +137,12 @@ void set_set_point(float set_point_)
 
   float get_Dterm()
   {return Dterm;}
+
+  void set_Dterm(float Dterm_)
+    {Dterm = Dterm_;}
 };
 
-inline PID armPID(100, 0, 0, 0);  //object creation
+inline PID armPID(50, 0, 0, 0);  //object creation
 
 
 

@@ -4,6 +4,7 @@ void pidTurn(float set, int maxVoltage)
   float armPos;
   arm_motor.tarePosition();
   armPID.set_error(10000);
+  armPID.set_Dterm(10000);
   armPID.set_set_point(set);
 
   //while ((armPID.get_Dterm() > 0.0001) && (armPID.get_error() >= 0.001))
