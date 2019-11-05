@@ -80,7 +80,7 @@ pros::lcd::set_text(3, "OPCONTROL");
 		pros::lcd::print(4, "armPos float %f\n", (float) arm_motor.getPosition());
   if (ButtonB.changedToPressed())
   {
-    pidTurn(155, 12000);
+    pidTurn(155, 300_ms, 12000);
   }
   if (ButtonX.isPressed())
   {

@@ -3,7 +3,6 @@
 //
 const int VISION_PORT = 19;
 
-const int DRIVE_MOTOR_LEFT_1 = 1;  //CHANGE
 const int DRIVE_MOTOR_LEFT_2 = -2;
 
 const int DRIVE_MOTOR_LEFT_3 = 3;
@@ -16,7 +15,7 @@ const int DRIVE_MOTOR_RIGHT_3 = -7;
 const int DRIVE_MOTOR_RIGHT_4 = 8;
 
 const int ARM_MOTOR = 10;
-inline MotorGroup baseLF({DRIVE_MOTOR_LEFT_1, DRIVE_MOTOR_LEFT_2});
+inline MotorGroup baseLF({DRIVE_MOTOR_LEFT_4, DRIVE_MOTOR_LEFT_2});
 inline MotorGroup baseLB({DRIVE_MOTOR_LEFT_3, DRIVE_MOTOR_LEFT_4});
 inline MotorGroup baseRF({DRIVE_MOTOR_RIGHT_1, DRIVE_MOTOR_RIGHT_2});
 inline MotorGroup baseRB({DRIVE_MOTOR_RIGHT_3, DRIVE_MOTOR_RIGHT_4});
@@ -36,7 +35,7 @@ inline ControllerButton ButtonDOWN(ControllerDigital::down);
 inline ControllerButton ButtonLEFT(ControllerDigital::left);
 inline ControllerButton ButtonRIGHT(ControllerDigital::right);
 
-void pidTurn(float set, int maxVoltage);
+void pidTurn(float set, QTime waitTime, int max_voltage);
 void fwbwVoltage(int voltage);
 void turnVoltage(int voltage);
 void strafeVoltage(int voltage);
@@ -47,7 +46,7 @@ int calcVoltage(float volts);
  const auto CHASSIS_WIDTH = 12.75_in;  //edit
  inline auto driveController = ChassisControllerFactory::create(
     {DRIVE_MOTOR_RIGHT_1, DRIVE_MOTOR_RIGHT_2, DRIVE_MOTOR_RIGHT_3, DRIVE_MOTOR_RIGHT_4},
-    {DRIVE_MOTOR_LEFT_1, DRIVE_MOTOR_LEFT_2, DRIVE_MOTOR_LEFT_3, DRIVE_MOTOR_LEFT_4},
+    {DRIVE_MOTOR_LEFT_4, DRIVE_MOTOR_LEFT_2, DRIVE_MOTOR_LEFT_3, DRIVE_MOTOR_LEFT_4},
     AbstractMotor::gearset::green,
     {WHEEL_DIAMETER, CHASSIS_WIDTH}
    );
@@ -100,6 +99,10 @@ float output(float input)
 
   last_error = error;
   last_input = input;
+
+  if (out > 12000)
+  {out = 12000;}
+
   return out;
 }
    // Anti windup system
@@ -140,9 +143,12 @@ void set_set_point(float set_point_)
 
   void set_Dterm(float Dterm_)
     {Dterm = Dterm_;}
+
+    float get_Iterm()
+    {return iTerm;}
 };
 
-inline PID armPID(50, 70, 0, 0);  //object creation
+inline PID armPID(80, 0, 0, 0);  //object creation
 
 
 

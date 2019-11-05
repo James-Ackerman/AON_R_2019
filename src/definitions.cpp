@@ -1,5 +1,5 @@
 #include "definitions.hpp"
-void pidTurn(float set, int maxVoltage)
+void pidTurn(float set, QTime waitTime, int max_voltage)
 {
   float armPos;
   arm_motor.tarePosition();
@@ -7,23 +7,31 @@ void pidTurn(float set, int maxVoltage)
   armPID.set_Dterm(10000);
   armPID.set_set_point(set);
 
-  //while ((armPID.get_Dterm() > 0.0001) && (armPID.get_error() >= 0.001))
-
-  while (armPID.get_Dterm()>0.5/*armPID.get_error()) >= 5*/)
-  {
+//timer
+Timer timer;
+timer.placeMark();
+while(timer.getDtFromMark() < waitTime)
+{
    pros::lcd::print(5, "WE'RE IN %f\n", armPID.get_set_point());
+   arm_motor.move_voltage(armPID.output(armPos));
    armPos = (float) arm_motor.getPosition();
 
-   if (armPID.output(armPos) >= maxVoltage)
-   {arm_motor.moveVoltage(maxVoltage);}
-
+   if(armPID.output(armPos) > max_voltage )
+   {arm_motor.move_voltage(max_voltage);}
    else
-   arm_motor.move_voltage(armPID.output(armPos));
-  }
-   pros::lcd::print(6, "WE'RE OUT %f\n", armPID.get_set_point());
-  arm_motor.move_voltage(0);
+   {arm_motor.move_voltage(armPID.output(armPos));}
+   if (armPID.get_error() > 0.01)
+   {
+     timer.clearMark();
+     timer.placeMark();
+   }
+   pros::delay(20);
 }
-
+arm_motor.move_voltage(0);
+pros::lcd::print(6, "WE'RE OUT %f\n", armPID.get_error());
+pros::lcd::print(7,"Iterm %f\n", armPID.get_Iterm());
+}
+//
 int calcVoltage(float volts){
   if(volts>=1.0){
     volts = 12000;
