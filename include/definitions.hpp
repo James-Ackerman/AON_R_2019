@@ -64,11 +64,11 @@ private:
 
  float set_point = 0;
  bool antiwindup = false;
- bool windupmax;
+ float windupmax;
 
  float iTerm=0;
  float error;
- float dt = 0.02;
+ float dt = 20;
  float Dterm;
  float outValue = 0;
  float last_error = 0;
@@ -148,9 +148,9 @@ void set_set_point(float set_point_)
     {return iTerm;}
 };
 
-inline PID armPID(80, 0, 0, 0);  //object creation
-
-
+inline PID armPID(60, 0, 13000, 2000 );  //object creation
+//1740
+//55, 1.7
 
 class visionSensor
 {
