@@ -207,4 +207,4 @@ class visionSensor
     else;
   }
 };
-visionSensor vision(); //object creation
+inline visionSensor vision; //object creation
