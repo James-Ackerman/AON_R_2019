@@ -75,21 +75,20 @@ void autonomous() {
  */
 void opcontrol() {
 pros::lcd::set_text(3, "OPCONTROL");
+Controller controller;
 	while (true)
 	{
-		pros::lcd::print(4, "armPos float %f\n", (float) arm_motor.getPosition());
+     driveController.arcade(controller.getAnalog(ControllerAnalog::leftY), -controller.getAnalog(ControllerAnalog::rightX));
+		pros::lcd::print(4, "basePos float %f\n", (float) abs((baseL.getPosition()+baseR.getPosition())/2));
   if (ButtonB.changedToPressed())
   {
     pidTurn(155, 2000_ms, 12000);
   }
-  if (ButtonX.isPressed())
+	if (ButtonY.changedToPressed())
   {
-    baseLF.moveVoltage(5000);
+    pidBase(720, 500_ms, 10000);
   }
-  else
-  {
-    baseLF.moveVoltage(0);
-  }
+
 		pros::delay(20);
 	}
 }

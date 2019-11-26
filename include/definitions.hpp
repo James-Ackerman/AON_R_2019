@@ -2,25 +2,17 @@
 #include "main.h"
 //
 const int VISION_PORT = 19;
+const int DRIVE_MOTOR_LEFT_1 = 1;
+const int DRIVE_MOTOR_LEFT_2 = 2;
+const int DRIVE_MOTOR_RIGHT_1 = -3;
+const int DRIVE_MOTOR_RIGHT_2 = -4;
 
-const int DRIVE_MOTOR_LEFT_2 = -2;
-
-const int DRIVE_MOTOR_LEFT_3 = 3;
-const int DRIVE_MOTOR_LEFT_4 = -4;
-
-const int DRIVE_MOTOR_RIGHT_1 = -5;
-const int DRIVE_MOTOR_RIGHT_2 = 6;
-
-const int DRIVE_MOTOR_RIGHT_3 = -7;
-const int DRIVE_MOTOR_RIGHT_4 = 8;
 
 const int ARM_MOTOR = 10;
-inline MotorGroup baseLF({DRIVE_MOTOR_LEFT_4, DRIVE_MOTOR_LEFT_2});
-inline MotorGroup baseLB({DRIVE_MOTOR_LEFT_3, DRIVE_MOTOR_LEFT_4});
-inline MotorGroup baseRF({DRIVE_MOTOR_RIGHT_1, DRIVE_MOTOR_RIGHT_2});
-inline MotorGroup baseRB({DRIVE_MOTOR_RIGHT_3, DRIVE_MOTOR_RIGHT_4});
+inline MotorGroup baseL({DRIVE_MOTOR_LEFT_1, DRIVE_MOTOR_LEFT_2});
+inline MotorGroup baseR({DRIVE_MOTOR_RIGHT_1, DRIVE_MOTOR_RIGHT_2});
 
-inline Controller masterController;
+inline Controller controller;
 
 inline ControllerButton RightBumperUP(ControllerDigital::R1);
 inline ControllerButton LeftBumperUP(ControllerDigital::L1);
@@ -41,12 +33,13 @@ void turnVoltage(int voltage);
 void strafeVoltage(int voltage);
 void stopDrive();
 int calcVoltage(float volts);
+void pidBase(float set, QTime waitTime, int max_voltage);
 
  const auto WHEEL_DIAMETER = 4_in;     //edit
  const auto CHASSIS_WIDTH = 12.75_in;  //edit
  inline auto driveController = ChassisControllerFactory::create(
-    {DRIVE_MOTOR_RIGHT_1, DRIVE_MOTOR_RIGHT_2, DRIVE_MOTOR_RIGHT_3, DRIVE_MOTOR_RIGHT_4},
-    {DRIVE_MOTOR_LEFT_4, DRIVE_MOTOR_LEFT_2, DRIVE_MOTOR_LEFT_3, DRIVE_MOTOR_LEFT_4},
+    {DRIVE_MOTOR_RIGHT_1, DRIVE_MOTOR_RIGHT_2},
+    {DRIVE_MOTOR_LEFT_1, DRIVE_MOTOR_LEFT_2},
     AbstractMotor::gearset::green,
     {WHEEL_DIAMETER, CHASSIS_WIDTH}
    );
@@ -149,6 +142,7 @@ void set_set_point(float set_point_)
 };
 
 inline PID armPID(60, 0, 13000, 2000 );  //object creation
+inline PID basePID(60,10,26000, 2000);
 //1740
 //55, 1.7
 
@@ -207,4 +201,4 @@ class visionSensor
     else;
   }
 };
-inline visionSensor vision; //object creation
+//inline visionSensor vision; //object creation
