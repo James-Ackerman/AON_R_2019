@@ -79,16 +79,21 @@ Controller controller;
 	while (true)
 	{
      driveController.arcade(controller.getAnalog(ControllerAnalog::leftY), -controller.getAnalog(ControllerAnalog::rightX));
-		pros::lcd::print(4, "basePos float %f\n", (float) abs((baseL.getPosition()+baseR.getPosition())/2));
+		pros::lcd::print(4, "basePos float %f\n", (float) (abs(baseL.getPosition())+abs(baseR.getPosition())/2));
   if (ButtonB.changedToPressed())
   {
     pidTurn(155, 2000_ms, 12000);
   }
+
 	if (ButtonY.changedToPressed())
   {
     pidBase(720, 500_ms, 10000);
   }
 
+	if (ButtonA.changedToPressed())
+  {
+    pidBaseTurn(750, 200_ms, 12000);
+  }
 		pros::delay(20);
 	}
 }

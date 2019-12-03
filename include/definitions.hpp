@@ -34,7 +34,8 @@ void strafeVoltage(int voltage);
 void stopDrive();
 int calcVoltage(float volts);
 void pidBase(float set, QTime waitTime, int max_voltage);
-
+void pidBaseTurn(float set, QTime waitTime, int max_voltage);
+//.
  const auto WHEEL_DIAMETER = 4_in;     //edit
  const auto CHASSIS_WIDTH = 12.75_in;  //edit
  inline auto driveController = ChassisControllerFactory::create(
@@ -88,7 +89,7 @@ float output(float input)
   iTerm = iTerm + Ki*error*dt;
   iTerm = antiWindup(iTerm);
   Dterm =  (last_input - input)/dt;
-  float out = Kp*error + iTerm + Dterm;
+  float out = Kp*error + iTerm + Kd*Dterm;
 
   last_error = error;
   last_input = input;
@@ -143,8 +144,8 @@ void set_set_point(float set_point_)
 
 inline PID armPID(60, 0, 13000, 2000 );  //object creation
 inline PID basePID(60,10,26000, 2000);
-//1740
-//55, 1.7
+inline PID baseTurnPID(60,0,26000, 2000);
+
 
 class visionSensor
 {

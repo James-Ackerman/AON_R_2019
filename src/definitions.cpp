@@ -1,5 +1,64 @@
 #include "definitions.hpp"
 
+void pidBaseTurn(float set, QTime waitTime, int max_voltage){
+  float basePos;
+  baseL.tarePosition();
+  baseR.tarePosition();
+  baseTurnPID.set_error(10000);
+  baseTurnPID.set_Dterm(10000);
+  baseTurnPID.set_set_point(set);
+
+  Timer timer;
+  timer.placeMark();
+while(timer.getDtFromMark() < waitTime)
+{
+  pros::lcd::print(5, "WE'RE IN %f\n", basePos);
+  // baseL.moveVoltage(baseTurnPID.output(basePos));
+  // baseR.moveVoltage(baseTurnPID.output(basePos));
+  basePos = (float) (abs(baseL.getPosition())+abs(baseR.getPosition())/2);
+//
+
+  if (set > 0)
+  {
+    if(baseTurnPID.output(basePos) > max_voltage)
+    {
+       baseL.moveVoltage(max_voltage);
+       baseR.moveVoltage(-max_voltage);
+    }
+    else
+    {
+       baseL.moveVoltage(baseTurnPID.output(basePos));
+       baseR.moveVoltage(-(baseTurnPID.output(basePos)));
+    }
+  }
+
+  else
+  {
+    if(baseTurnPID.output(basePos) > max_voltage)
+    {
+       baseL.moveVoltage(-max_voltage);
+       baseR.moveVoltage(max_voltage);
+    }
+    else
+    {
+       baseL.moveVoltage(-(baseTurnPID.output(basePos)));
+       baseR.moveVoltage(baseTurnPID.output(basePos));
+    }
+  }
+   if (baseTurnPID.get_error() > 15)
+   {
+     timer.clearMark();
+     timer.placeMark();
+   }
+   pros::delay(20);
+}
+baseL.moveVoltage(0);
+baseR.moveVoltage(0);
+pros::lcd::print(6, "WE'RE OUT %f\n", baseTurnPID.get_error());
+//pros::lcd::print(7,"Iterm %f\n", basePID.get_Iterm());
+}
+//
+
 void pidBase(float set, QTime waitTime, int max_voltage)
 {
   float basePos;
@@ -36,6 +95,7 @@ baseL.moveVoltage(0);
 baseR.moveVoltage(0);
 pros::lcd::print(6, "WE'RE OUT %f\n", basePID.get_error());
 //pros::lcd::print(7,"Iterm %f\n", basePID.get_Iterm());
+//
 }
 //
 void pidTurn(float set, QTime waitTime, int max_voltage)
