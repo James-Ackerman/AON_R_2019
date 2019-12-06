@@ -6,17 +6,14 @@ void pidBaseTurn(float set, QTime waitTime, int max_voltage){
   baseR.tarePosition();
   baseTurnPID.set_error(10000);
   baseTurnPID.set_Dterm(10000);
-  baseTurnPID.set_set_point(set);
-
+  baseTurnPID.set_set_point(abs(set));
+//.
   Timer timer;
   timer.placeMark();
 while(timer.getDtFromMark() < waitTime)
 {
+  basePos = (float) ((abs(baseL.getPosition())+abs(baseR.getPosition()))/2);
   pros::lcd::print(5, "WE'RE IN %f\n", basePos);
-  // baseL.moveVoltage(baseTurnPID.output(basePos));
-  // baseR.moveVoltage(baseTurnPID.output(basePos));
-  basePos = (float) (abs(baseL.getPosition())+abs(baseR.getPosition())/2);
-//
 
   if (set > 0)
   {

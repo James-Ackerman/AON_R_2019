@@ -142,9 +142,11 @@ void set_set_point(float set_point_)
     {return iTerm;}
 };
 
+//......
+
 inline PID armPID(60, 0, 13000, 2000 );  //object creation
 inline PID basePID(60,10,26000, 2000);
-inline PID baseTurnPID(60,0,26000, 2000);
+inline PID baseTurnPID(70,60,0, 2000);
 
 
 class visionSensor

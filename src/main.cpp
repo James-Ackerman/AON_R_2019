@@ -72,7 +72,7 @@ void autonomous() {
  * If the robot is disabled or communications is lost, the
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
- */
+ *///.
 void opcontrol() {
 pros::lcd::set_text(3, "OPCONTROL");
 Controller controller;
@@ -92,7 +92,7 @@ Controller controller;
 
 	if (ButtonA.changedToPressed())
   {
-    pidBaseTurn(750, 200_ms, 12000);
+    pidBaseTurn(-550, 200_ms, 12000);
   }
 		pros::delay(20);
 	}
